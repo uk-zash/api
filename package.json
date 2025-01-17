@@ -1,0 +1,17 @@
+{
+  "name": "eshop",
+  "version": "1.0.0",
+  "description": "backend for the eshop",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "prettier": "^3.4.2"
+  }
+}
