@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 require("dotenv/config")
 const cors = require("cors")
 const authJwt = require("./helper/jwt")
+const errorHandler = require("./helper/errorHandler")
 
 
 
@@ -16,6 +17,7 @@ app.options("*" , cors())
 app.use(bodyParser.json())
 app.use(morgan("tiny"))
 app.use(authJwt())
+app.use(errorHandler)
 
 
 
