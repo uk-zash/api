@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link rel="stylesheet" href="../public/styles/index.css">
+    <!-- Add any necessary Bootstrap or custom CSS here -->
+</head>
+<style>
+    /* Basic reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    background-color: #333;
+    color: white;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.filters {
+    padding: 1rem;
+    background-color: #f4f4f4;
+}
+
+.filters ul {
+    list-style-type: none;
+}
+
+.filters li {
+    margin: 10px 0;
+}
+
+.product-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+.product-card {
+    width: 250px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.product-card img {
+    max-width: 100%;
+    height: auto;
+}
+
+.product-card h3 {
+    margin: 10px 0;
+}
+
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #333;
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .product-list {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+</style>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <a href="/">
+                <img src="/images/logo.png" alt="Logo" class="logo"> <!-- Add your logo -->
+            </a>
+        </div>
+        <div class="navbar-links">
+            <form action="/search" method="GET">
+                <input type="text" name="query" placeholder="Search for products...">
+                <button type="submit">Search</button>
+            </form>
+            <a href="/cart">
+                <img src="/images/cart-icon.png" alt="Cart"> <!-- Cart icon -->
+            </a>
+        </div>
+    </nav>
+
+    <!-- Filters Section -->
+    <div class="filters">
+        <h3>Filter by Category</h3>
+        <ul>
+            <% categories.forEach(category => { %>
+                <li><a href="/?category=<%= category._id %>"><%= category.name %></a></li>
+            <% }); %>
+        </ul>
+    </div>
+
+    <!-- Featured Products Section -->
+    <div class="featured-products">
+        <h2>Featured Products</h2>
+        <div class="product-list">
+            <% featuredProducts.forEach(product => { %>
+                <div class="product-card">
+                    <img src="<%= product.image %>" alt="<%= product.name %>">
+                    <h3><%= product.name %></h3>
+                    <p><%= product.description %></p>
+                    <p>Price: $<%= product.price %></p>
+                    <p>Category: <%= product.category.name %></p>
+                    <% if (user && user.isAdmin) { %>
+                        <a href="/admin/edit-product/<%= product._id %>">Edit</a>
+                        <a href="/admin/delete-product/<%= product._id %>">Delete</a>
+                    <% } else { %>
+                        <a href="/add-to-cart/<%= product._id %>">Add to Cart</a>
+                    <% } %>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+
+    <!-- Product Listing Section -->
+    <div class="products">
+        <h2>All Products</h2>
+        <div class="product-list">
+            <% products.forEach(product => { %>
+                <div class="product-card">
+                    <img src="<%= product.image %>" alt="<%= product.name %>">
+                    <h3><%= product.name %></h3>
+                    <p><%= product.description %></p>
+                    <p>Price: $<%= product.price %></p>
+                    <p>Category: <%= product.category.name %></p>
+                    <% if (user && user.isAdmin) { %>
+                        <a href="/admin/edit-product/<%= product._id %>">Edit</a>
+                        <a href="/admin/delete-product/<%= product._id %>">Delete</a>
+                    <% } else { %>
+                        <a href="/add-to-cart/<%= product._id %>">Add to Cart</a>
+                    <% } %>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Your E-Commerce Site</p>
+    </footer>
+</body>
+</html>
