@@ -10,7 +10,7 @@ const errorHandler = require("./helper/errorHandler");
 
 // Middleware Setup
 app.use(cors());  
-app.options("*", cors());  
+// app.options("*", cors());  
 app.use(morgan("tiny"));  
 app.use(express.json()); 
 app.use(express.urlencoded({ extended: true }))
@@ -34,22 +34,11 @@ const categoriesRoutes = require("./routes/categories");
 const productRouter = require("./routes/products");
 const usersRoutes = require("./routes/users");
 const ordersRoutes = require("./routes/orders");
-const mainRoute = require("./routes/main")
-
 
 app.use(`${api}/products`, productRouter);
 app.use(`${api}/categories`, categoriesRoutes);
 app.use(`${api}/users`, usersRoutes);
 app.use(`${api}/orders`, ordersRoutes);
-app.use(`${api}/` , mainRoute)
-
-app.get('/login', (req, res) => {
-    res.render('login') // Render the login page here
-})
-
-app.get('/register', (req, res) => {
-    res.render('register') // Render the login page here
-})
 
 // Database connection
 const db = process.env.MONGO_URI;

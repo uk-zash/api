@@ -99,8 +99,6 @@ router.post('/login', async (req, res) => {
                 { expiresIn: '1d' }
             );
 
-            console.log('Token generated:', token);  // Debugging token generation
-
             // Send the token and a success message to the frontend
             res.status(200).json({
                 message: 'Login successful',
@@ -118,7 +116,6 @@ router.post('/login', async (req, res) => {
 
 
 router.post('/register', async (req, res) => {
-    try {
         const {
             password,
             confirmPassword,
@@ -132,18 +129,7 @@ router.post('/register', async (req, res) => {
             country,
             isAdmin,
         } = req.body
-        console.log(req.body)
-        // Check if passwords match
-        if (password !== confirmPassword) {
-            return res.status(400).send('Passwords do not match')
-        }
 
-        // Check if password is provided
-        if (!password) {
-            return res.status(400).send('Password is required')
-        }
-
-        // Hash the password
         const salt = await bcrypt.genSalt(10)
         const hashedPassword = await bcrypt.hash(password, salt)
 
@@ -151,30 +137,21 @@ router.post('/register', async (req, res) => {
         const user = new User({
             name,
             email,
-            passwordHash: hashedPassword, // Store the hashed password
+            passwordHash: hashedPassword, 
             phone,
-            isAdmin: isAdmin || false, // Ensure isAdmin defaults to false if not provided
+            isAdmin: isAdmin || false, 
             street,
             apartment,
             zip,
             city,
             country,
         })
-
-        // Save the user to the database
         const savedUser = await user.save()
 
-        // Check if the user was saved successfully
         if (!savedUser) {
             return res.status(500).send('Cannot create user')
         }
-
-        // Redirect to login page
-        res.redirect('/login')
-    } catch (error) {
-        console.error(error)
-        res.status(500).send('Error creating user')
-    }
+        res.status(200).send(savedUser)
 })
 
 router.get('/get/count', async (req, res) => {

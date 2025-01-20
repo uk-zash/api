@@ -28,6 +28,21 @@ const storage = multer.diskStorage({
 })
 const upload = multer({ storage: storage })
 
+
+router.get("/random" , async(req , res) =>{
+    const isRandom = req.query.random === "true";
+
+    let products;
+    if(isRandom){
+        products = await Product.aggregate([{$sample: {size:5}}])
+
+    }else{
+        products = await Product.find();
+    }
+
+    res.json(products)
+})
+
 router.get('/', async (req, res) => {
     let filter = {}
     if (req.query.categories) {

@@ -61,16 +61,16 @@ router.post('/', async (req, res) => {
     const totalPrice = totalPrices.reduce((a , b) => a+b , 0);
 
     let order = new Order({
-        orderItems: orderItemsIdsResolved, // Order items array
+        orderItems: orderItemsIdsResolved,
         shippingAddress1: req.body.shippingAddress1,
-        shippingAddress2: req.body.shippingAddress2 || '', // Default to empty string if not provided
+        shippingAddress2: req.body.shippingAddress2 || '', 
         city: req.body.city,
         zip: req.body.zip,
         country: req.body.country,
         phone: req.body.phone,
-        status: req.body.status || 'Pending', // Default to 'Pending' if not provided
+        status: req.body.status || 'Pending',
         totalPrice: totalPrice,
-        user: req.body.user, // Reference to the user (ID)
+        user: req.body.user,
         dateOrdered: req.body.dateOrdered || Date.now(),
     })
 
