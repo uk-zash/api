@@ -39,7 +39,6 @@ app.use(`${api}/products`, productRouter);
 app.use(`${api}/categories`, categoriesRoutes);
 app.use(`${api}/users`, usersRoutes);
 app.use(`${api}/orders`, ordersRoutes);
-
 // Database connection
 const db = process.env.MONGO_URI;
 mongoose.connect(db, { dbName: "ecommerceAPI" })

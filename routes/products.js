@@ -124,7 +124,8 @@ router.put('/:id', async (req, res) => {
         return res.status(400).send('invalid category')
     }
 
-    let product = new Product(
+    let product = await Product.findByIdAndUpdate(
+        req.params.id,
         {
             name: req.body.name,
             image: req.body.image,
